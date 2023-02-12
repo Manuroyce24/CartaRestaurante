@@ -12,7 +12,7 @@ fetch('https://63d011d710982404378c822f.mockapi.io/carta')
     botones.forEach(boton => {
       boton.addEventListener("click", function () {
 
-        // if (this.checked) {
+        
         let platito = this.closest("div");
 
         let platitoFavorito = {
@@ -102,36 +102,6 @@ function mostrarCarta() {
     clon.querySelector(".alergenos").innerHTML = plato.alergenos;
     menu.appendChild(clon);
   });
-}
-
-
-function mostrarFavoritos() {
-
-  let menu = document.querySelector("section#platos div");
-  if (!mostrarFav) {
-
-    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    menu.innerHTML = "";
-    // Pintamos favoritos en la pantalla
-
-    favoritos.forEach(plato => {
-
-      let plantilla = template.content.cloneNode(true);
-      plantilla.querySelector("img").src = plato.image;
-      plantilla.querySelector("h4").innerHTML = plato.plato;
-      plantilla.querySelector(".ingredientes").innerHTML = plato.ingredientes;
-      plantilla.querySelector(".precio").innerHTML = plato.precio;
-      plantilla.querySelector(".alergenos").innerHTML = plato.alergenos;
-      plantilla.querySelector("input[type='checkbox']").style.display = "hidden";
-      plantilla.querySelector("#ocultable").style.display = "none";
-      menu.appendChild(plantilla);
-    });
-
-    mostrarFav = true;
-  } else {
-    mostrarCarta();
-    mostrarFav = false;
-  }
 }
 
 function borrarFavoritos() {
