@@ -107,6 +107,7 @@ function mostrarCarta() {
   });
 }
 
+//Borra favoritos
 function borrarFavoritos() {
   favoritos = []
   localStorage.setItem("favoritos", JSON.stringify(favoritos));
@@ -150,11 +151,7 @@ function initStorage() {
   if (store.getItem("favoritos") == null) {
     store.setItem("favoritos", JSON.stringify(favoritos));
   }
-  if (store.getItem("cursor") == null) {
-    store.setItem("cursor", 0);
-  }
   favoritos = JSON.parse(store.getItem("favoritos"));
-  cursor = store.getItem("cursor")
 
   console.table(favoritos)
 
