@@ -8,24 +8,28 @@ fetch('https://63d011d710982404378c822f.mockapi.io/carta')
 
     carta = data;
     mostrarCarta();
-    const botones = document.querySelectorAll("button");
-    botones.forEach(boton => {
-      boton.addEventListener("click", function () {
+    let botones = document.querySelectorAll("button");
+botones.forEach(boton => {
+  boton.addEventListener("click", function () {
 
-        
-        let platito = this.closest("div");
+    let platito = this.closest("div");
 
-        let platitoFavorito = {
-          image: platito.querySelector("img").src,
-          plato: platito.querySelector("h4").innerHTML,
-          ingredientes: platito.querySelector(".ingredientes").innerHTML,
-          precio: platito.querySelector(".precio").innerHTML,
-          alergenos: platito.querySelector(".alergenos").innerHTML
-        };
-        favoritos.push(platitoFavorito);
-        localStorage.setItem("favoritos", JSON.stringify(favoritos));
-      });
-    });
+    let platitoFavorito = {
+      image: platito.querySelector("img").src,
+      plato: platito.querySelector("h4").innerHTML,
+      ingredientes: platito.querySelector(".ingredientes").innerHTML,
+      precio: platito.querySelector(".precio").innerHTML,
+      alergenos: platito.querySelector(".alergenos").innerHTML
+    };
+
+    let existe = favoritos.findIndex(p => p.plato === platitoFavorito.plato)
+    if (existe === -1) {
+      favoritos.push(platitoFavorito);
+    }
+
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  });
+});
 
     let mostrarFav = false;
     document.querySelector("#mostrarFavoritos").addEventListener("click", function () {
@@ -70,8 +74,7 @@ fetch('https://63d011d710982404378c822f.mockapi.io/carta')
       }
     });
 
-    function obtenerPlatosLocalStorage() {
-    }
+    
   });
 
 
