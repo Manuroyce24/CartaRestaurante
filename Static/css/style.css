@@ -27,6 +27,10 @@ section#platos div div.menu {
   grid-template-areas: "img titulo" "img ingredientes" "img alergenos" "img precio" "img fav-btn" ;
 }
 
+#favorito {
+  border-radius: 0%;
+}
+
 section#platos div div.menu * {
   margin: 0;
   padding: 0;
