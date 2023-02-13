@@ -31,48 +31,57 @@ botones.forEach(boton => {
   });
 });
 
-    let mostrarFav = false;
-    document.querySelector("#mostrarFavoritos").addEventListener("click", function () {
-      mostrarFav = !mostrarFav;
+let mostrarFav = false;
+document.querySelector("#mostrarFavoritos").addEventListener("click", function() {
+  mostrarFav = !mostrarFav;
+  if (mostrarFav) {
+    favoritos.forEach(function(plato) {
+      // Construir el template
+      const row = document.createElement("tr");
+      row.innerHTML = `<td> 
+                  <img src="${plato.image}" width=100> 
+                 </td>
+                 <td>${plato.plato}</td>
+                 <td>
+                  <a href="#" class="borrar-curso" data-id="${plato.id}"> ❌</a>
+                 </td>`;
+      document.querySelector("#lista-carrito tbody").appendChild(row);
+    });
+    document.querySelector("tbody").addEventListener("click", function(e) {
+      if (e.target.classList.contains("borrar-curso")) {
+        e.target.parentElement.parentElement.remove();
 
-      if (mostrarFav) {
-        // Recuperar los favoritos del local storage
-        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-        // Recorrer los favoritos y crear las filas de la tabla
-        favoritos.forEach(function (plato) {
-
-          // Construir el template
-          const row = document.createElement('tr');
-          row.innerHTML = `<td> 
-                <img src="${plato.image}" width=100> 
-               </td>
-               <td>${plato.plato}</td>
-   
-               <td>
-                <a href="#" class="borrar-curso" data-id="${plato.id}">❌</a>
-               </td>`;
-          document.querySelector('#lista-carrito tbody').appendChild(row);
-        });
-
-        // Event listener para borrar
-        document.querySelector("tbody").addEventListener("click", function (e) {
-          if (e.target.classList.contains("borrar-curso")) {
-            e.target.parentElement.parentElement.remove();
-
-            // Borra de favoritos
-            const id = e.target.getAttribute("data-id");
-            const index = favoritos.findIndex(plato => plato.id === id);
-            favoritos.splice(index, 1);
-
-            localStorage.setItem("favoritos", JSON.stringify(favoritos));
-          }
-        });
-      } else {
-        // Limpiar la tabla
-        document.querySelector("tbody").innerHTML = "";
+        // Delete the element from the favoritos array as well
+        const id = e.target.getAttribute("data-id");
+        console.log("Before filtering:", favoritos);
+        const updatedFavoritos = favoritos.filter(plato => plato.id !== id);
+        favoritos = updatedFavoritos;
+        console.log("After filtering:", favoritos);
+        if (favoritos.length) {
+          localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        } else {
+          localStorage.removeItem("favoritos");
+        }
       }
     });
+  } else {
+    document.querySelector("tbody").innerHTML = "";
+  }
+});
+
+document.querySelector("tbody").addEventListener("click", function (e) {
+  if (e.target.classList.contains("borrar-curso")) {
+    e.target.parentElement.parentElement.remove();
+
+    // Delete the element from the `favoritos` array first
+    const id = e.target.getAttribute("data-id");
+    const index = favoritos.findIndex(plato => plato.id === id);
+    favoritos.splice(index, 1);
+
+    // Then update local storage
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }
+});
 
     
   });
