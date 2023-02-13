@@ -51,7 +51,6 @@ document.querySelector("#mostrarFavoritos").addEventListener("click", function()
       if (e.target.classList.contains("borrar-curso")) {
         e.target.parentElement.parentElement.remove();
 
-        // Delete the element from the favoritos array as well
         const id = e.target.getAttribute("data-id");
         console.log("Before filtering:", favoritos);
         const updatedFavoritos = favoritos.filter(plato => plato.id !== id);
@@ -73,12 +72,12 @@ document.querySelector("tbody").addEventListener("click", function (e) {
   if (e.target.classList.contains("borrar-curso")) {
     e.target.parentElement.parentElement.remove();
 
-    // Delete the element from the `favoritos` array first
+    // Borra elemento del local
     const id = e.target.getAttribute("data-id");
     const index = favoritos.findIndex(plato => plato.id === id);
     favoritos.splice(index, 1);
 
-    // Then update local storage
+    // Actualizar el local storage 
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
   }
 });
