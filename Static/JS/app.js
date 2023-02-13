@@ -52,10 +52,8 @@ document.querySelector("#mostrarFavoritos").addEventListener("click", function()
         e.target.parentElement.parentElement.remove();
 
         const id = e.target.getAttribute("data-id");
-        console.log("Before filtering:", favoritos);
         const updatedFavoritos = favoritos.filter(plato => plato.id !== id);
         favoritos = updatedFavoritos;
-        console.log("After filtering:", favoritos);
         if (favoritos.length) {
           localStorage.setItem("favoritos", JSON.stringify(favoritos));
         } else {
